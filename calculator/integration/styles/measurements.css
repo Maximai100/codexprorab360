@@ -1,0 +1,279 @@
+/* Размеры элементов калькулятора */
+.calculator-module {
+  /* Заголовок */
+  --header-height: 64px;
+  --header-padding: 16px 20px;
+  --header-font-size: 24px;
+  --header-font-weight: 600;
+  --header-line-height: 1.2;
+  
+  /* Навигация */
+  --nav-height: 56px;
+  --nav-item-padding: 12px 16px;
+  --nav-item-font-size: 16px;
+  --nav-item-font-weight: 500;
+  --nav-item-border-radius: 4px;
+  
+  /* Карточки комнат */
+  --room-card-width: 300px;
+  --room-card-height: 200px;
+  --room-card-padding: 16px;
+  --room-card-border-radius: 8px;
+  --room-card-margin: 12px;
+  --room-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --room-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+  
+  /* Поля ввода */
+  --input-height: 40px;
+  --input-padding: 8px 12px;
+  --input-border-radius: 4px;
+  --input-border-width: 1px;
+  --input-font-size: 14px;
+  --input-line-height: 1.5;
+  
+  /* Кнопки */
+  --button-height: 40px;
+  --button-padding: 8px 16px;
+  --button-border-radius: 4px;
+  --button-font-size: 14px;
+  --button-font-weight: 500;
+  --button-line-height: 1.5;
+  --button-min-width: 80px;
+  
+  /* Модальные окна */
+  --modal-width: 500px;
+  --modal-max-height: 80vh;
+  --modal-padding: 24px;
+  --modal-border-radius: 12px;
+  --modal-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --modal-backdrop: rgba(0, 0, 0, 0.5);
+  
+  /* Формы */
+  --form-group-margin: 16px;
+  --form-label-font-size: 14px;
+  --form-label-font-weight: 500;
+  --form-label-margin-bottom: 8px;
+  --form-error-font-size: 12px;
+  --form-error-margin-top: 4px;
+  
+  /* Списки */
+  --list-item-padding: 12px 16px;
+  --list-item-border-radius: 4px;
+  --list-item-margin: 4px 0;
+  --list-item-font-size: 14px;
+  --list-item-line-height: 1.5;
+  
+  /* Таблицы */
+  --table-header-height: 48px;
+  --table-row-height: 40px;
+  --table-cell-padding: 12px 16px;
+  --table-border-width: 1px;
+  --table-border-radius: 8px;
+  --table-font-size: 14px;
+  
+  /* Индикаторы */
+  --indicator-size: 24px;
+  --indicator-border-radius: 50%;
+  --indicator-margin: 8px;
+  --indicator-font-size: 12px;
+  
+  /* Иконки */
+  --icon-size-sm: 16px;
+  --icon-size-md: 20px;
+  --icon-size-lg: 24px;
+  --icon-size-xl: 32px;
+  
+  /* Отступы контейнеров */
+  --container-padding: 20px;
+  --container-margin: 16px;
+  --container-border-radius: 8px;
+  
+  /* Сетка */
+  --grid-gap: 16px;
+  --grid-item-min-width: 280px;
+  --grid-item-max-width: 400px;
+  
+  /* Адаптивные брейкпоинты */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1200px;
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .calculator-module {
+    --header-height: 56px;
+    --header-padding: 12px 16px;
+    --header-font-size: 20px;
+    
+    --nav-height: 48px;
+    --nav-item-padding: 8px 12px;
+    --nav-item-font-size: 14px;
+    
+    --room-card-width: 100%;
+    --room-card-height: 180px;
+    --room-card-padding: 12px;
+    --room-card-margin: 8px;
+    
+    --input-height: 44px;
+    --input-padding: 12px 16px;
+    
+    --button-height: 44px;
+    --button-padding: 12px 16px;
+    --button-min-width: 100px;
+    
+    --modal-width: 95vw;
+    --modal-padding: 16px;
+    
+    --container-padding: 16px;
+    --container-margin: 12px;
+    
+    --grid-gap: 12px;
+    --grid-item-min-width: 100%;
+  }
+}
+
+/* Планшеты */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .calculator-module {
+    --room-card-width: 280px;
+    --room-card-height: 190px;
+    
+    --modal-width: 600px;
+    
+    --grid-item-min-width: 260px;
+  }
+}
+
+/* Десктоп */
+@media (min-width: 1025px) {
+  .calculator-module {
+    --room-card-width: 300px;
+    --room-card-height: 200px;
+    
+    --modal-width: 500px;
+    
+    --grid-item-min-width: 280px;
+  }
+}
+
+/* Утилитарные классы для размеров */
+.calc-header { 
+  height: var(--header-height); 
+  padding: var(--header-padding); 
+  font-size: var(--header-font-size); 
+  font-weight: var(--header-font-weight); 
+  line-height: var(--header-line-height); 
+}
+
+.calc-nav { 
+  height: var(--nav-height); 
+}
+
+.calc-nav-item { 
+  padding: var(--nav-item-padding); 
+  font-size: var(--nav-item-font-size); 
+  font-weight: var(--nav-item-font-weight); 
+  border-radius: var(--nav-item-border-radius); 
+}
+
+.calc-room-card { 
+  width: var(--room-card-width); 
+  height: var(--room-card-height); 
+  padding: var(--room-card-padding); 
+  border-radius: var(--room-card-border-radius); 
+  margin: var(--room-card-margin); 
+  box-shadow: var(--room-card-shadow); 
+}
+
+.calc-room-card:hover { 
+  box-shadow: var(--room-card-shadow-hover); 
+}
+
+.calc-input { 
+  height: var(--input-height); 
+  padding: var(--input-padding); 
+  border-radius: var(--input-border-radius); 
+  border-width: var(--input-border-width); 
+  font-size: var(--input-font-size); 
+  line-height: var(--input-line-height); 
+}
+
+.calc-button { 
+  height: var(--button-height); 
+  padding: var(--button-padding); 
+  border-radius: var(--button-border-radius); 
+  font-size: var(--button-font-size); 
+  font-weight: var(--button-font-weight); 
+  line-height: var(--button-line-height); 
+  min-width: var(--button-min-width); 
+}
+
+.calc-modal { 
+  width: var(--modal-width); 
+  max-height: var(--modal-max-height); 
+  padding: var(--modal-padding); 
+  border-radius: var(--modal-border-radius); 
+  box-shadow: var(--modal-shadow); 
+}
+
+.calc-form-group { 
+  margin-bottom: var(--form-group-margin); 
+}
+
+.calc-form-label { 
+  font-size: var(--form-label-font-size); 
+  font-weight: var(--form-label-font-weight); 
+  margin-bottom: var(--form-label-margin-bottom); 
+}
+
+.calc-form-error { 
+  font-size: var(--form-error-font-size); 
+  margin-top: var(--form-error-margin-top); 
+}
+
+.calc-list-item { 
+  padding: var(--list-item-padding); 
+  border-radius: var(--list-item-border-radius); 
+  margin: var(--list-item-margin); 
+  font-size: var(--list-item-font-size); 
+  line-height: var(--list-item-line-height); 
+}
+
+.calc-table-header { 
+  height: var(--table-header-height); 
+}
+
+.calc-table-row { 
+  height: var(--table-row-height); 
+}
+
+.calc-table-cell { 
+  padding: var(--table-cell-padding); 
+  font-size: var(--table-font-size); 
+}
+
+.calc-indicator { 
+  width: var(--indicator-size); 
+  height: var(--indicator-size); 
+  border-radius: var(--indicator-border-radius); 
+  margin: var(--indicator-margin); 
+  font-size: var(--indicator-font-size); 
+}
+
+.calc-icon-sm { width: var(--icon-size-sm); height: var(--icon-size-sm); }
+.calc-icon-md { width: var(--icon-size-md); height: var(--icon-size-md); }
+.calc-icon-lg { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+.calc-icon-xl { width: var(--icon-size-xl); height: var(--icon-size-xl); }
+
+.calc-container { 
+  padding: var(--container-padding); 
+  margin: var(--container-margin); 
+  border-radius: var(--container-border-radius); 
+}
+
+.calc-grid { 
+  display: grid; 
+  gap: var(--grid-gap); 
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-item-min-width), 1fr)); 
+}

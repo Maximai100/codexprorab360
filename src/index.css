@@ -1,4 +1,7 @@
 @import url('./styles/variables.css');
+@import url('./styles/calculator/color-palette.css');
+@import url('./styles/calculator/measurements.css');
+@import url('./styles/calculator/isolation.css');
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -931,6 +934,61 @@ body.dark-theme .btn-ai {
 
 /* --- NEW PROJECT & NAVIGATION STYLES --- */
 
+/* Calculator View Styles */
+.calculator-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--bg-color);
+}
+
+.calculator-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+    padding: var(--spacing-l);
+    background: var(--secondary-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.calculator-header .back-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-s);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: var(--spacing-s);
+    border-radius: var(--border-radius-s);
+    transition: background-color 0.2s ease;
+}
+
+.calculator-header .back-button:hover {
+    background: var(--bg-color);
+}
+
+.calculator-header h1 {
+    margin: 0;
+    font-size: var(--font-size-l);
+    color: var(--text-color);
+    flex: 1;
+}
+
+.calculator-content {
+    flex: 1;
+    overflow: hidden;
+}
+
+.prorab-calculator {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Bottom Navigation Bar */
 .bottom-nav {
     position: fixed !important;
@@ -1737,6 +1795,12 @@ input[type=number] { -moz-appearance: textfield; }
     flex-shrink: 0;
 }
 
+/* Приводим SVG внутри скрепки к единому размеру (как в ListItem) */
+.document-list-item .icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+}
+
 .doc-info {
     flex-grow: 1;
     overflow: hidden;
@@ -1767,11 +1831,18 @@ input[type=number] { -moz-appearance: textfield; }
     border: none;
     cursor: pointer;
     color: var(--hint-color);
-    padding: 4px;
+    padding: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-icon:hover {
-    color: var(--text-color);
+    color: #fff;
+    background-color: var(--color-danger);
 }
 
 .btn-icon .icon-wrapper {

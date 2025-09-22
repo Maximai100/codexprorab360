@@ -1,0 +1,165 @@
+/* Цветовая палитра калькулятора */
+:root {
+  /* Основные цвета */
+  --calc-primary-color: #3390ec;
+  --calc-primary-hover: #2980d6;
+  --calc-primary-active: #1f6bb3;
+  --calc-primary-light: #e3f2fd;
+  --calc-primary-dark: #1976d2;
+  
+  /* Фоновые цвета */
+  --calc-bg-primary: #ffffff;
+  --calc-bg-secondary: #f8f9fa;
+  --calc-bg-hover: #f0f0f0;
+  --calc-bg-disabled: #f5f5f5;
+  --calc-bg-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Темная тема - фоновые цвета */
+  --calc-bg-dark-primary: #1a1a1a;
+  --calc-bg-dark-secondary: #2d2d2d;
+  --calc-bg-dark-hover: #404040;
+  --calc-bg-dark-disabled: #333333;
+  
+  /* Текстовые цвета */
+  --calc-text-primary: #333333;
+  --calc-text-secondary: #666666;
+  --calc-text-hint: #999999;
+  --calc-text-disabled: #cccccc;
+  --calc-text-inverse: #ffffff;
+  
+  /* Темная тема - текстовые цвета */
+  --calc-text-dark-primary: #ffffff;
+  --calc-text-dark-secondary: #cccccc;
+  --calc-text-dark-hint: #999999;
+  --calc-text-dark-disabled: #666666;
+  
+  /* Границы */
+  --calc-border-light: #e0e0e0;
+  --calc-border-medium: #cccccc;
+  --calc-border-dark: #999999;
+  --calc-border-focus: #3390ec;
+  
+  /* Темная тема - границы */
+  --calc-border-dark-light: #404040;
+  --calc-border-dark-medium: #666666;
+  --calc-border-dark-dark: #999999;
+  
+  /* Состояния */
+  --calc-success: #28a745;
+  --calc-success-light: #d4edda;
+  --calc-success-dark: #155724;
+  --calc-success-border: #c3e6cb;
+  
+  --calc-warning: #ffc107;
+  --calc-warning-light: #fff3cd;
+  --calc-warning-dark: #856404;
+  --calc-warning-border: #ffeaa7;
+  
+  --calc-error: #dc3545;
+  --calc-error-light: #f8d7da;
+  --calc-error-dark: #721c24;
+  --calc-error-border: #f5c6cb;
+  
+  --calc-info: #17a2b8;
+  --calc-info-light: #d1ecf1;
+  --calc-info-dark: #0c5460;
+  --calc-info-border: #bee5eb;
+  
+  /* Тени */
+  --calc-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --calc-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --calc-shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --calc-shadow-focus: 0 0 0 2px rgba(51, 144, 236, 0.2);
+  
+  /* Радиусы */
+  --calc-radius-small: 4px;
+  --calc-radius-medium: 8px;
+  --calc-radius-large: 12px;
+  --calc-radius-round: 50%;
+  
+  /* Отступы */
+  --calc-spacing-xs: 4px;
+  --calc-spacing-sm: 8px;
+  --calc-spacing-md: 16px;
+  --calc-spacing-lg: 24px;
+  --calc-spacing-xl: 32px;
+  
+  /* Размеры шрифтов */
+  --calc-font-xs: 12px;
+  --calc-font-sm: 14px;
+  --calc-font-md: 16px;
+  --calc-font-lg: 18px;
+  --calc-font-xl: 24px;
+  --calc-font-xxl: 32px;
+  
+  /* Веса шрифтов */
+  --calc-font-normal: 400;
+  --calc-font-medium: 500;
+  --calc-font-semibold: 600;
+  --calc-font-bold: 700;
+  
+  /* Высоты строк */
+  --calc-line-height-tight: 1.2;
+  --calc-line-height-normal: 1.5;
+  --calc-line-height-relaxed: 1.75;
+  
+  /* Переходы */
+  --calc-transition-fast: 150ms ease-in-out;
+  --calc-transition-normal: 200ms ease-in-out;
+  --calc-transition-slow: 300ms ease-in-out;
+  
+  /* Z-index */
+  --calc-z-dropdown: 1000;
+  --calc-z-modal: 1050;
+  --calc-z-popover: 1060;
+  --calc-z-tooltip: 1070;
+}
+
+/* Темная тема */
+[data-theme="dark"] {
+  --calc-bg-primary: var(--calc-bg-dark-primary);
+  --calc-bg-secondary: var(--calc-bg-dark-secondary);
+  --calc-bg-hover: var(--calc-bg-dark-hover);
+  --calc-bg-disabled: var(--calc-bg-dark-disabled);
+  
+  --calc-text-primary: var(--calc-text-dark-primary);
+  --calc-text-secondary: var(--calc-text-dark-secondary);
+  --calc-text-hint: var(--calc-text-dark-hint);
+  --calc-text-disabled: var(--calc-text-dark-disabled);
+  
+  --calc-border-light: var(--calc-border-dark-light);
+  --calc-border-medium: var(--calc-border-dark-medium);
+  --calc-border-dark: var(--calc-border-dark-dark);
+}
+
+/* Утилитарные классы для цветов */
+.calc-text-primary { color: var(--calc-text-primary); }
+.calc-text-secondary { color: var(--calc-text-secondary); }
+.calc-text-hint { color: var(--calc-text-hint); }
+.calc-text-disabled { color: var(--calc-text-disabled); }
+.calc-text-inverse { color: var(--calc-text-inverse); }
+
+.calc-bg-primary { background-color: var(--calc-bg-primary); }
+.calc-bg-secondary { background-color: var(--calc-bg-secondary); }
+.calc-bg-hover { background-color: var(--calc-bg-hover); }
+.calc-bg-disabled { background-color: var(--calc-bg-disabled); }
+
+.calc-border-light { border-color: var(--calc-border-light); }
+.calc-border-medium { border-color: var(--calc-border-medium); }
+.calc-border-dark { border-color: var(--calc-border-dark); }
+.calc-border-focus { border-color: var(--calc-border-focus); }
+
+.calc-success { color: var(--calc-success); }
+.calc-warning { color: var(--calc-warning); }
+.calc-error { color: var(--calc-error); }
+.calc-info { color: var(--calc-info); }
+
+.calc-bg-success { background-color: var(--calc-success-light); }
+.calc-bg-warning { background-color: var(--calc-warning-light); }
+.calc-bg-error { background-color: var(--calc-error-light); }
+.calc-bg-info { background-color: var(--calc-info-light); }
+
+.calc-border-success { border-color: var(--calc-success-border); }
+.calc-border-warning { border-color: var(--calc-warning-border); }
+.calc-border-error { border-color: var(--calc-error-border); }
+.calc-border-info { border-color: var(--calc-info-border); }

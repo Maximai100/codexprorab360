@@ -1,0 +1,361 @@
+/* Основные стили калькулятора */
+.calculator-module {
+  font-family: var(--font-family);
+  line-height: var(--line-height-m);
+  color: var(--text-color);
+  background: var(--bg-color);
+  border-radius: var(--border-radius-m);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+}
+
+.calculator-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Заголовок */
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xl);
+  background: var(--primary-color);
+  color: var(--primary-text-color);
+}
+
+.calc-title h1 {
+  margin: 0 0 var(--spacing-s) 0;
+  font-size: var(--font-size-l);
+  font-weight: 600;
+}
+
+.calc-title p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: var(--font-size-s);
+}
+
+.calc-controls {
+  display: flex;
+  gap: var(--spacing-m);
+  align-items: center;
+}
+
+/* Навигация */
+.calc-nav {
+  display: flex;
+  background: var(--secondary-bg-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: var(--spacing-l) var(--spacing-xl);
+  border: none;
+  background: transparent;
+  color: var(--hint-color);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-btn:hover {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.nav-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background: var(--bg-color);
+}
+
+/* Основной контент */
+.calc-main {
+  flex: 1;
+  padding: var(--spacing-xl);
+  overflow-y: auto;
+}
+
+/* Кнопки */
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--primary-text-color);
+  border: none;
+  padding: var(--spacing-m) var(--spacing-xl);
+  border-radius: var(--border-radius-s);
+  font-size: var(--font-size-s);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s);
+}
+
+.btn-primary:hover {
+  background: var(--link-color);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--secondary-bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-m) var(--spacing-xl);
+  border-radius: var(--border-radius-s);
+  font-size: var(--font-size-s);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-color);
+  border-color: var(--primary-color);
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: var(--primary-text-color);
+  padding: var(--spacing-m);
+  border-radius: var(--border-radius-s);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 18px;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Индикаторы состояния */
+.error-banner {
+  background: var(--danger-color);
+  color: var(--primary-text-color);
+  padding: var(--spacing-m) var(--spacing-xl);
+  border-bottom: 1px solid var(--danger-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-banner button {
+  background: none;
+  border: none;
+  color: var(--primary-text-color);
+  font-size: 18px;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+}
+
+/* Пустое состояние */
+.empty-state {
+  text-align: center;
+  padding: 60px var(--spacing-xl);
+  color: var(--hint-color);
+}
+
+.empty-state h2 {
+  margin: 0 0 var(--spacing-m) 0;
+  color: var(--text-color);
+}
+
+.empty-state p {
+  margin: 0 0 var(--spacing-xl) 0;
+  font-size: var(--font-size-m);
+}
+
+/* Кнопки действий в комнатах */
+.room-actions {
+  display: flex;
+  gap: var(--spacing-s);
+  align-items: center;
+}
+
+.btn-edit, .btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-s);
+  border-radius: var(--border-radius-s);
+  color: var(--hint-color);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-edit:hover {
+  background: var(--secondary-bg-color);
+  color: var(--primary-color);
+}
+
+.btn-delete:hover {
+  background: var(--secondary-bg-color);
+  color: var(--danger-color);
+}
+
+/* Заголовок комнат */
+.rooms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-l);
+}
+
+.rooms-header h2 {
+  margin: 0;
+  font-size: var(--font-size-l);
+  color: var(--text-color);
+}
+
+/* Стили для сетки комнат */
+.rooms-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s);
+}
+
+/* Стили для пустого состояния */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+  background: var(--secondary-bg-color);
+  border-radius: var(--border-radius-m);
+  border: 1px solid var(--border-color);
+}
+
+.empty-state p {
+  margin: 0 0 var(--spacing-m) 0;
+  color: var(--hint-color);
+  font-size: var(--font-size-m);
+}
+
+/* Стили для действий с комнатами */
+.room-actions {
+  display: flex;
+  gap: var(--spacing-s);
+}
+
+.btn-edit, .btn-delete {
+  background: var(--secondary-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-s);
+  padding: var(--spacing-s);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.btn-edit:hover {
+  background: var(--primary-color);
+  color: var(--primary-text-color);
+  border-color: var(--primary-color);
+}
+
+.btn-delete:hover {
+  background: var(--danger-color);
+  color: var(--primary-text-color);
+  border-color: var(--danger-color);
+}
+
+/* Стили для формы редактирования комнаты */
+.room-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-l);
+  padding: var(--spacing-l);
+  background: var(--bg-color);
+  border-radius: var(--border-radius-m);
+  border: 1px solid var(--border-color);
+}
+
+.form-header h2 {
+  margin: 0;
+  font-size: var(--font-size-l);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s);
+}
+
+.room-input {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-s);
+  padding: var(--spacing-s) var(--spacing-m);
+  font-size: var(--font-size-m);
+  color: var(--text-color);
+  width: 100%;
+  min-width: 120px;
+}
+
+.room-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(51, 144, 236, 0.2);
+}
+
+.input-with-unit {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s);
+}
+
+.input-unit {
+  font-size: var(--font-size-s);
+  color: var(--hint-color);
+  white-space: nowrap;
+}
+
+.unit-buttons {
+  display: flex;
+  gap: var(--spacing-s);
+}
+
+.unit-btn {
+  background: var(--secondary-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-s);
+  padding: var(--spacing-s) var(--spacing-m);
+  font-size: var(--font-size-s);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.unit-btn:hover {
+  background: var(--bg-color);
+  border-color: var(--primary-color);
+}
+
+.unit-btn.active {
+  background: var(--primary-color);
+  color: var(--primary-text-color);
+  border-color: var(--primary-color);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--spacing-m);
+  justify-content: center;
+  padding-top: var(--spacing-l);
+  border-top: 1px solid var(--border-color);
+}

@@ -1,0 +1,227 @@
+/* CSS изоляция для калькулятора */
+.calculator-module {
+  /* Изоляция от глобальных стилей */
+  all: initial;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Восстановить необходимые стили */
+  display: block;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.calculator-module *,
+.calculator-module *::before,
+.calculator-module *::after {
+  box-sizing: border-box;
+}
+
+/* Восстановить базовые стили для содержимого */
+.calculator-module h1,
+.calculator-module h2,
+.calculator-module h3,
+.calculator-module h4,
+.calculator-module h5,
+.calculator-module h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.calculator-module p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.calculator-module button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.calculator-module input,
+.calculator-module textarea,
+.calculator-module select {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.calculator-module ul,
+.calculator-module ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.calculator-module a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Защита от внешних стилей */
+.calculator-module .button {
+  /* Переопределить любые внешние стили кнопок */
+  background: var(--calc-primary-color) !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 200ms ease-in-out !important;
+}
+
+.calculator-module .button:hover {
+  background: var(--calc-primary-hover) !important;
+}
+
+.calculator-module .button:active {
+  background: var(--calc-primary-active) !important;
+}
+
+.calculator-module .modal {
+  /* Переопределить любые внешние стили модальных окон */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 1000 !important;
+}
+
+.calculator-module .modal-content {
+  background: var(--calc-bg-primary) !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+  max-width: 500px !important;
+  width: 90% !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Защита от внешних стилей форм */
+.calculator-module input[type="text"],
+.calculator-module input[type="number"],
+.calculator-module input[type="email"],
+.calculator-module textarea {
+  width: 100% !important;
+  height: 40px !important;
+  padding: 8px 12px !important;
+  border: 1px solid var(--calc-border-light) !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  background: var(--calc-bg-primary) !important;
+  color: var(--calc-text-primary) !important;
+}
+
+.calculator-module input:focus,
+.calculator-module textarea:focus {
+  border-color: var(--calc-primary-color) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(51, 144, 236, 0.2) !important;
+}
+
+/* Защита от внешних стилей карточек */
+.calculator-module .card {
+  background: var(--calc-bg-primary) !important;
+  border: 1px solid var(--calc-border-light) !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 200ms ease-in-out !important;
+}
+
+.calculator-module .card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Темная тема */
+.calculator-module[data-theme="dark"] {
+  --calc-bg-primary: #1a1a1a;
+  --calc-bg-secondary: #2d2d2d;
+  --calc-bg-hover: #404040;
+  --calc-text-primary: #ffffff;
+  --calc-text-secondary: #cccccc;
+  --calc-text-hint: #999999;
+  --calc-border-light: #404040;
+  --calc-border-medium: #666666;
+  --calc-border-dark: #999999;
+}
+
+.calculator-module[data-theme="dark"] .modal-content {
+  background: var(--calc-bg-secondary) !important;
+}
+
+.calculator-module[data-theme="dark"] input[type="text"],
+.calculator-module[data-theme="dark"] input[type="number"],
+.calculator-module[data-theme="dark"] textarea {
+  background: var(--calc-bg-secondary) !important;
+  color: var(--calc-text-primary) !important;
+  border-color: var(--calc-border-light) !important;
+}
+
+.calculator-module[data-theme="dark"] .card {
+  background: var(--calc-bg-secondary) !important;
+  border-color: var(--calc-border-light) !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .calculator-module .modal-content {
+    width: 95% !important;
+    padding: 16px !important;
+  }
+  
+  .calculator-module .button {
+    height: 44px !important;
+    padding: 12px 16px !important;
+  }
+  
+  .calculator-module input[type="text"],
+  .calculator-module input[type="number"],
+  .calculator-module textarea {
+    height: 44px !important;
+  }
+}
+
+/* Анимации */
+.calculator-module * {
+  transition: all 200ms ease-in-out;
+}
+
+.calculator-module .fade-in {
+  animation: fadeIn 200ms ease-in-out;
+}
+
+.calculator-module .slide-up {
+  animation: slideUp 200ms ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
