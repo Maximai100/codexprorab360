@@ -55,6 +55,42 @@
   height: 14px;
 }
 
+/* Стили для правильного позиционирования блока Финансы */
+.finances-section {
+  position: static !important;
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 16px 0 !important;
+  float: none !important;
+  clear: both !important;
+  z-index: 1 !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* Стили для кнопки экспорта PDF - серая как кнопки корзины */
+.add-in-header-btn.export-pdf-btn {
+  color: var(--hint-color) !important;
+}
+
+.add-in-header-btn.export-pdf-btn:hover {
+  color: var(--text-color) !important;
+}
+
+/* Более агрессивный подход для кнопки экспорта */
+.project-section-header .add-in-header-btn.export-pdf-btn {
+  color: var(--hint-color) !important;
+  opacity: 0.7 !important;
+}
+
+.project-section-header .add-in-header-btn.export-pdf-btn:hover {
+  color: var(--text-color) !important;
+  opacity: 1 !important;
+}
+
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   .finance-actions {

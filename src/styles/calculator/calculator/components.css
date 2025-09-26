@@ -1,0 +1,364 @@
+/* Стили компонентов калькулятора */
+
+/* Редактор комнат */
+.room-editor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rooms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.rooms-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.room-card {
+  background: var(--bg-color, #fff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.room-card:hover {
+  border-color: var(--primary-color, #667eea);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.room-card.editing {
+  border-color: var(--primary-color, #667eea);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.room-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.room-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.room-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.btn-edit:hover {
+  background: var(--bg-hover, #f0f0f0);
+}
+
+.btn-delete:hover {
+  background: #fee;
+  color: #c33;
+}
+
+.room-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.room-dimensions {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color, #333);
+}
+
+.room-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+}
+
+/* Форма комнаты */
+.room-form-container {
+  margin-top: 24px;
+  background: var(--bg-secondary, #f8f9fa);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.room-form {
+  max-width: 800px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.form-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.form-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 16px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary, #666);
+  border-bottom: 3px solid transparent;
+}
+
+.tab-btn:hover {
+  color: var(--text-color, #333);
+  background: var(--bg-hover, #f0f0f0);
+}
+
+.tab-btn.active {
+  color: var(--primary-color, #667eea);
+  border-bottom-color: var(--primary-color, #667eea);
+}
+
+.tab-icon {
+  font-size: 16px;
+}
+
+.tab-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-content {
+  min-height: 400px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dimensions-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.unit-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.unit-selector label {
+  font-weight: 500;
+  color: var(--text-color, #333);
+}
+
+.unit-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.unit-btn {
+  background: var(--bg-secondary, #f8f9fa);
+  border: 1px solid var(--border-color, #e0e0e0);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.unit-btn:hover {
+  background: var(--bg-hover, #f0f0f0);
+}
+
+.unit-btn.active {
+  background: var(--primary-color, #667eea);
+  color: white;
+  border-color: var(--primary-color, #667eea);
+}
+
+/* Редакторы проемов, исключений и геометрии */
+.opening-editor, .exclusion-editor, .geometric-element-editor {
+  background: var(--bg-color, #fff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.editor-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.openings-list, .exclusions-list, .elements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.opening-card, .exclusion-card, .element-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg-secondary, #f8f9fa);
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #e0e0e0);
+}
+
+.opening-card.editing, .exclusion-card.editing, .element-card.editing {
+  border-color: var(--primary-color, #667eea);
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.opening-info, .exclusion-info, .element-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.opening-type, .exclusion-name, .element-type {
+  font-weight: 500;
+  color: var(--text-color, #333);
+}
+
+.opening-dimensions, .exclusion-dimensions, .element-dimensions {
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+}
+
+.exclusion-effects {
+  display: flex;
+  gap: 8px;
+}
+
+.exclusion-effects span {
+  background: var(--primary-color, #667eea);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.opening-actions, .exclusion-actions, .element-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Формы редактирования */
+.opening-form, .exclusion-form, .element-form {
+  background: var(--bg-color, #fff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.opening-form h5, .exclusion-form h5, .element-form h5 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--text-color, #333);
+  font-size: 14px;
+}
+
+.form-group select, .form-group input {
+  padding: 12px;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-color, #fff);
+  color: var(--text-color, #333);
+}
+
+.form-group select:focus, .form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color, #667eea);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin: 0;
+}

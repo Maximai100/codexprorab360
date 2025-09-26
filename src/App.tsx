@@ -15,7 +15,7 @@ import {
 } from './types';
 import { tg, safeShowAlert, safeShowConfirm, generateNewEstimateNumber, resizeImage, readFileAsDataURL, numberToWordsRu, generateUUID } from './utils';
 import { statusMap } from './constants';
-import { Icon, IconPlus, IconClose, IconEdit, IconTrash, IconDocument, IconFolder, IconSettings, IconBook, IconClipboard, IconCart, IconDownload, IconPaperclip, IconDragHandle, IconProject, IconChevronRight, IconSparkles, IconSun, IconMoon, IconContrast, IconCreditCard, IconCalendar, IconMessageSquare, IconImage, IconTrendingUp, IconHome, IconCheckSquare } from './components/common/Icon';
+import { Icon, IconPlus, IconClose, IconEdit, IconTrash, IconDocument, IconFolder, IconSettings, IconBook, IconClipboard, IconCart, IconDownload, IconPaperclip, IconDragHandle, IconProject, IconChevronRight, IconSparkles, IconSun, IconMoon, IconContrast, IconCreditCard, IconCalendar, IconMessageSquare, IconImage, IconTrendingUp, IconHome, IconCheckSquare, IconCalculator } from './components/common/Icon';
 import { Loader } from './components/common/Loader';
 import { SettingsModal } from './components/modals/SettingsModal';
 import { EstimatesListModal } from './components/modals/EstimatesListModal';
@@ -46,6 +46,7 @@ import { OverallFinancialReportScreen } from './components/views/OverallFinancia
 import { WorkspaceView } from './components/views/WorkspaceView';
 import { ScratchpadView } from './components/views/ScratchpadView';
 import { ProjectTasksScreen } from './components/views/ProjectTasksScreen';
+import { CalculatorView } from './components/views/CalculatorView';
 import { ListItem } from './components/ui/ListItem';
 import { useProjectContext } from './context/ProjectContext';
 import AuthScreen from './components/views/AuthScreen';
@@ -1047,6 +1048,10 @@ const App: React.FC = () => {
         appState.navigateToView('reports');
     }, [appState]);
 
+    const handleNavigateToCalculator = useCallback(() => {
+        appState.navigateToView('calculator');
+    }, [appState]);
+
     const handleOpenScratchpad = useCallback(() => {
         // Получаем текущее содержимое глобальной заметки
         const globalNote = notesHook.getNote('global');
@@ -1318,6 +1323,13 @@ const App: React.FC = () => {
                     />
                 );
             
+            case 'calculator':
+                return (
+                    <CalculatorView
+                        onBack={appState.goBack}
+                    />
+                );
+            
             default:
                 return (
                     <WorkspaceView
@@ -1401,6 +1413,9 @@ const App: React.FC = () => {
                     <button onClick={() => appState.openModal('estimatesList')} className="header-btn" aria-label="Список смет">
                         <IconClipboard />
                     </button>
+                    <button onClick={() => appState.navigateToView('reports')} className="header-btn" aria-label="Отчеты">
+                        <IconTrendingUp />
+                    </button>
                     <button onClick={() => appState.openModal('settings')} className="header-btn" aria-label="Настройки">
                         <IconSettings />
                     </button>
@@ -1458,18 +1473,18 @@ const App: React.FC = () => {
                     <span>Инвентарь</span>
                 </button>
                 <button 
-                    onClick={() => appState.navigateToView('reports')} 
-                    className={appState.activeView === 'reports' ? 'active' : ''}
-                >
-                    <IconTrendingUp />
-                    <span>Отчеты</span>
-                </button>
-                <button 
                     onClick={() => appState.navigateToView('allTasks')} 
                     className={appState.activeView === 'allTasks' ? 'active' : ''}
                 >
                     <IconCheckSquare />
                     <span>Задачи</span>
+                </button>
+                <button 
+                    onClick={handleNavigateToCalculator} 
+                    className={appState.activeView === 'calculator' ? 'active' : ''}
+                >
+                    <IconCalculator />
+                    <span>Калькулятор</span>
                 </button>
             </nav>
 

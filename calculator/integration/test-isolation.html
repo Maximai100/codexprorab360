@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест изоляции калькулятора</title>
+    <style>
+        /* Глобальные стили, которые могут конфликтовать */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: serif; 
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        /* Конфликтующие стили */
+        .button { 
+            background: red !important; 
+            color: white !important;
+            border: 2px solid black !important;
+            padding: 20px !important;
+            font-size: 20px !important;
+        }
+        
+        .modal { 
+            background: yellow !important; 
+            border: 5px solid green !important;
+            padding: 50px !important;
+        }
+        
+        .input {
+            background: pink !important;
+            border: 3px solid purple !important;
+            height: 60px !important;
+            font-size: 18px !important;
+        }
+        
+        .card {
+            background: orange !important;
+            border: 4px solid brown !important;
+            padding: 30px !important;
+        }
+        
+        h1 {
+            color: red !important;
+            font-size: 50px !important;
+            text-decoration: underline !important;
+        }
+        
+        /* Стили для тестирования */
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+        }
+        
+        .test-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .test-description {
+            margin-bottom: 15px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Тест изоляции стилей калькулятора</h1>
+        
+        <div class="test-section">
+            <div class="test-title">📋 Описание теста</div>
+            <div class="test-description">
+                Эта страница содержит конфликтующие глобальные стили, которые должны быть изолированы от калькулятора.
+                Калькулятор должен работать корректно, несмотря на эти конфликты.
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🎯 Конфликтующие стили</div>
+            <div class="test-description">
+                На странице установлены следующие конфликтующие стили:
+            </div>
+            <ul>
+                <li><strong>.button</strong> - красный фон, черная граница, большой размер</li>
+                <li><strong>.modal</strong> - желтый фон, зеленая граница, большие отступы</li>
+                <li><strong>.input</strong> - розовый фон, фиолетовая граница, большой размер</li>
+                <li><strong>.card</strong> - оранжевый фон, коричневая граница</li>
+                <li><strong>h1</strong> - красный цвет, большой размер, подчеркивание</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🔧 Тестовые элементы</div>
+            <div class="test-description">
+                Эти элементы используют конфликтующие классы:
+            </div>
+            
+            <button class="button">Конфликтующая кнопка</button>
+            <input type="text" class="input" placeholder="Конфликтующее поле ввода" />
+            <div class="card">
+                <h3>Конфликтующая карточка</h3>
+                <p>Этот элемент должен иметь оранжевый фон и коричневую границу.</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">📊 Статус тестирования</div>
+            <div id="test-status" class="status info">
+                Ожидание загрузки калькулятора...
+            </div>
+            <button class="test-button" onclick="runTests()">Запустить тесты</button>
+            <button class="test-button" onclick="loadCalculator()">Загрузить калькулятор</button>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🎨 Калькулятор</div>
+            <div class="test-description">
+                Калькулятор должен отображаться ниже с правильными стилями, несмотря на конфликты:
+            </div>
+            <div id="calculator-container"></div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">📝 Результаты тестирования</div>
+            <div id="test-results">
+                <div class="status info">Тесты не запущены</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let calculatorLoaded = false;
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('test-status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function loadCalculator() {
+            updateStatus('Загрузка калькулятора...', 'info');
+            
+            // Имитация загрузки калькулятора
+            setTimeout(() => {
+                const container = document.getElementById('calculator-container');
+                container.innerHTML = `
+                    <div class="calculator-module">
+                        <div class="calc-header">
+                            <h1>Калькулятор строительных материалов</h1>
+                        </div>
+                        <div class="calc-nav">
+                            <button class="calc-nav-item">Комнаты</button>
+                            <button class="calc-nav-item">Результаты</button>
+                        </div>
+                        <div class="calc-grid">
+                            <div class="calc-room-card">
+                                <h3>Гостиная</h3>
+                                <p>Площадь: 25 м²</p>
+                                <button class="calc-button">Редактировать</button>
+                            </div>
+                            <div class="calc-room-card">
+                                <h3>Спальня</h3>
+                                <p>Площадь: 18 м²</p>
+                                <button class="calc-button">Редактировать</button>
+                            </div>
+                        </div>
+                        <div class="calc-modal" style="display: none;">
+                            <div class="calc-modal-content">
+                                <h3>Модальное окно</h3>
+                                <input type="text" class="calc-input" placeholder="Введите данные" />
+                                <button class="calc-button">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                calculatorLoaded = true;
+                updateStatus('Калькулятор загружен', 'success');
+            }, 1000);
+        }
+        
+        function runTests() {
+            if (!calculatorLoaded) {
+                updateStatus('Сначала загрузите калькулятор', 'error');
+                return;
+            }
+            
+            updateStatus('Запуск тестов...', 'info');
+            
+            const results = [];
+            
+            // Тест 1: Проверка изоляции кнопок
+            const calcButtons = document.querySelectorAll('.calculator-module .calc-button');
+            const globalButtons = document.querySelectorAll('.button');
+            
+            if (calcButtons.length > 0 && globalButtons.length > 0) {
+                const calcButton = calcButtons[0];
+                const globalButton = globalButtons[0];
+                
+                const calcStyle = window.getComputedStyle(calcButton);
+                const globalStyle = window.getComputedStyle(globalButton);
+                
+                if (calcStyle.backgroundColor !== globalStyle.backgroundColor) {
+                    results.push('✅ Кнопки калькулятора изолированы от глобальных стилей');
+                } else {
+                    results.push('❌ Кнопки калькулятора не изолированы');
+                }
+            }
+            
+            // Тест 2: Проверка изоляции полей ввода
+            const calcInputs = document.querySelectorAll('.calculator-module .calc-input');
+            const globalInputs = document.querySelectorAll('.input');
+            
+            if (calcInputs.length > 0 && globalInputs.length > 0) {
+                const calcInput = calcInputs[0];
+                const globalInput = globalInputs[0];
+                
+                const calcStyle = window.getComputedStyle(calcInput);
+                const globalStyle = window.getComputedStyle(globalInput);
+                
+                if (calcStyle.backgroundColor !== globalStyle.backgroundColor) {
+                    results.push('✅ Поля ввода калькулятора изолированы');
+                } else {
+                    results.push('❌ Поля ввода калькулятора не изолированы');
+                }
+            }
+            
+            // Тест 3: Проверка изоляции карточек
+            const calcCards = document.querySelectorAll('.calculator-module .calc-room-card');
+            const globalCards = document.querySelectorAll('.card');
+            
+            if (calcCards.length > 0 && globalCards.length > 0) {
+                const calcCard = calcCards[0];
+                const globalCard = globalCards[0];
+                
+                const calcStyle = window.getComputedStyle(calcCard);
+                const globalStyle = window.getComputedStyle(globalCard);
+                
+                if (calcStyle.backgroundColor !== globalStyle.backgroundColor) {
+                    results.push('✅ Карточки калькулятора изолированы');
+                } else {
+                    results.push('❌ Карточки калькулятора не изолированы');
+                }
+            }
+            
+            // Тест 4: Проверка заголовков
+            const calcHeaders = document.querySelectorAll('.calculator-module h1');
+            const globalHeaders = document.querySelectorAll('h1');
+            
+            if (calcHeaders.length > 0) {
+                const calcHeader = calcHeaders[0];
+                const calcStyle = window.getComputedStyle(calcHeader);
+                
+                // Проверяем, что заголовок калькулятора не красный
+                if (calcStyle.color !== 'rgb(255, 0, 0)') {
+                    results.push('✅ Заголовки калькулятора изолированы');
+                } else {
+                    results.push('❌ Заголовки калькулятора не изолированы');
+                }
+            }
+            
+            // Отображение результатов
+            const resultsContainer = document.getElementById('test-results');
+            resultsContainer.innerHTML = results.map(result => 
+                `<div class="status ${result.startsWith('✅') ? 'success' : 'error'}">${result}</div>`
+            ).join('');
+            
+            updateStatus('Тесты завершены', 'success');
+        }
+        
+        // Автоматическая загрузка калькулятора при загрузке страницы
+        window.addEventListener('load', () => {
+            setTimeout(loadCalculator, 500);
+        });
+    </script>
+    
+    <!-- Подключение стилей калькулятора -->
+    <link rel="stylesheet" href="../integration/styles/isolation.css">
+    <link rel="stylesheet" href="../integration/styles/color-palette.css">
+    <link rel="stylesheet" href="../integration/styles/measurements.css">
+</body>
+</html>

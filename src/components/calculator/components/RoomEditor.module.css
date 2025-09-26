@@ -1,0 +1,40 @@
+.calculatorSection {
+  padding: 1rem;
+  width: 100%;
+}
+
+.formContainer {
+  margin-bottom: 24px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.formContainer h3 {
+  margin: 0 0 24px 0;
+  font-size: 20px;
+}
+
+.dimensionsGroup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.roomsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.addButton {
+  margin-top: 20px;
+}
