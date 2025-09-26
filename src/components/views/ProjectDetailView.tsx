@@ -233,6 +233,62 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                     <button onClick={() => handleDeleteProject(activeProject.id)} className="header-btn" aria-label="Удалить"><IconTrash/></button>
                     {activeProject.status === 'completed' && <button onClick={() => onOpenActModal(financials.estimateTotal)} className="header-btn" aria-label="Сгенерировать акт"><IconDocument/></button>}
                 </div>
+                {/* Финансы (вернули на место до переноса) */}
+                <div className="card project-section">
+                    <div className="project-section-header collapsible-header" onClick={() => setIsFinancesCollapsed(!isFinancesCollapsed)}>
+                        <h3>Финансы ({projectFinances.length})</h3>
+                        <div className="header-actions">
+                            <button className="add-in-header-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenFinanceModal(); }}><IconPlus/></button>
+                            {isFinancesCollapsed ? <IconChevronRight /> : <IconChevronDown />}
+                        </div>
+                    </div>
+                    <div className={`project-section-body ${isFinancesCollapsed ? 'collapsed' : ''}`}>
+                        {projectFinances.length > 0 ? (
+                            <div className="project-items-list">
+                                {(isFinancesCollapsed ? projectFinances.slice(0, 3) : projectFinances).map(f => (
+                                    <ListItem
+                                      key={f.id}
+                                      icon={f.type === 'income'
+                                        ? <IconChevronRight style={{transform: 'rotate(-90deg)'}} />
+                                        : <IconChevronRight style={{transform: 'rotate(90deg)'}} />
+                                      }
+                                      iconBgColor={f.type === 'income' ? 'rgba(48, 209, 88, 0.2)' : 'rgba(255, 69, 58, 0.2)'}
+                                      title={f.description || (f.type === 'expense' ? 'Расход' : 'Оплата')}
+                                      subtitle={`${financeCategoryToRu(f.category || 'other')}${f.date ? ' • ' + new Date(f.date).toLocaleDateString('ru-RU') : ''}`}
+                                      amountText={`${f.type === 'income' ? '+' : '-'}${formatCurrency(f.amount)}`}
+                                      amountColor={f.type === 'income' ? 'var(--color-success)' : 'var(--color-danger)'}
+                                      actions={
+                                        <div className="finance-actions" onClick={(e) => e.stopPropagation()}>
+                                          {f.receipt_url && (
+                                            <button
+                                              className="receipt-btn"
+                                              onClick={() => handleViewReceipt(f.receipt_url!, f.description || (f.type === 'expense' ? 'Расход' : 'Оплата'))}
+                                              title="Просмотреть чек"
+                                            >
+                                              <IconCamera />
+                                            </button>
+                                          )}
+                                          <button onClick={(e) => { e.stopPropagation(); onDeleteFinanceEntry(f.id); }} className="delete-btn" aria-label="Удалить"><IconTrash/></button>
+                                        </div>
+                                      }
+                                      onClick={() => setEditingFinance(f)}
+                                    />
+                                ))}
+                                {isFinancesCollapsed && projectFinances.length > 3 && (
+                                    <div className="collapsed-indicator">
+                                        <span>... и еще {projectFinances.length - 3} транзакций</span>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="empty-state-container">
+                                <IconCreditCard />
+                                <p>Транзакций пока нет.</p>
+                                <button onClick={(e) => { e.preventDefault(); onOpenFinanceModal(); }} className="btn btn-primary">+ Добавить транзакцию</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </header>
             <main className="project-detail-main">
                 <div className="card project-section financial-dashboard">
@@ -443,64 +499,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                         </div>
                     </div>
                 </div>
-                <div className="card project-section">
-                    <div className="project-section-header collapsible-header" onClick={() => setIsFinancesCollapsed(!isFinancesCollapsed)}>
-                        <h3>Финансы ({projectFinances.length})</h3>
-                        <div className="header-actions">
-                            <button className="add-in-header-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenFinanceModal(); }}><IconPlus/></button>
-                            {isFinancesCollapsed ? <IconChevronRight /> : <IconChevronDown />}
-                        </div>
-                    </div>
-                    <div className={`project-section-body ${isFinancesCollapsed ? 'collapsed' : ''}`}>
-                        {projectFinances.length > 0 ? (
-                            <div className="project-items-list">
-                                {(isFinancesCollapsed ? projectFinances.slice(0, 3) : projectFinances).map(f => (
-                                    <ListItem
-                                      key={f.id}
-                                      icon={f.type === 'income'
-                                        ? <IconChevronRight style={{transform: 'rotate(-90deg)'}} />
-                                        : <IconChevronRight style={{transform: 'rotate(90deg)'}} />
-                                      }
-                                      iconBgColor={f.type === 'income' ? 'rgba(48, 209, 88, 0.2)' : 'rgba(255, 69, 58, 0.2)'}
-                                      title={f.description || (f.type === 'expense' ? 'Расход' : 'Оплата')}
-                                      subtitle={`${financeCategoryToRu(f.category || 'other')}${f.date ? ' • ' + new Date(f.date).toLocaleDateString('ru-RU') : ''}`}
-                                      amountText={`${f.type === 'income' ? '+' : '-'}${formatCurrency(f.amount)}`}
-                                      amountColor={f.type === 'income' ? 'var(--color-success)' : 'var(--color-danger)'}
-                                      actions={
-                                        <div className="finance-actions">
-                                          {f.receipt_url && (
-                                            <button
-                                              className="receipt-btn"
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleViewReceipt(f.receipt_url!, f.description || (f.type === 'expense' ? 'Расход' : 'Оплата'));
-                                              }}
-                                              title="Просмотреть чек"
-                                            >
-                                              <IconCamera />
-                                            </button>
-                                          )}
-                                          <button onClick={() => setEditingFinance(f)} className="edit-btn" aria-label="Редактировать"><IconEdit/></button>
-                                          <button onClick={(e) => { e.stopPropagation(); onDeleteFinanceEntry(f.id); }} className="delete-btn" aria-label="Удалить"><IconTrash/></button>
-                                        </div>
-                                      }
-                                    />
-                                ))}
-                                {isFinancesCollapsed && projectFinances.length > 3 && (
-                                    <div className="collapsed-indicator">
-                                        <span>... и еще {projectFinances.length - 3} транзакций</span>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div className="empty-state-container">
-                                <IconCreditCard />
-                                <p>Транзакций пока нет.</p>
-                                <button onClick={(e) => { e.preventDefault(); onOpenFinanceModal(); }} className="btn btn-primary">+ Добавить транзакцию</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                {/* удалённый ранее блок не добавляем снова, чтобы порядок не ломался */}
                 {editingFinance && (
                     <FinanceEntryModal
                         onClose={() => setEditingFinance(null)}
