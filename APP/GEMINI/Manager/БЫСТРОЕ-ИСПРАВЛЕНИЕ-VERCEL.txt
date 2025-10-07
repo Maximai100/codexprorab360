@@ -1,0 +1,65 @@
+╔══════════════════════════════════════════════════════════════╗
+║          🔧 БЫСТРОЕ ИСПРАВЛЕНИЕ VERCEL                      ║
+╚══════════════════════════════════════════════════════════════╝
+
+ПРОБЛЕМА: CORS ошибки на https://dashboardmorent.vercel.app
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+РЕШЕНИЕ (2 шага):
+
+1️⃣  Настройте CORS в Directus:
+
+    a) Откройте: https://1.cycloscope.online
+    b) Войдите как администратор
+    c) Settings → Project Settings → CORS
+    d) В "Allowed Origins" добавьте:
+       
+       https://dashboardmorent.vercel.app
+
+    e) Сохраните (Save)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣  Проверьте переменные окружения на Vercel:
+
+    a) Откройте: https://vercel.com/dashboard
+    b) Выберите проект
+    c) Settings → Environment Variables
+    d) Убедитесь, что есть:
+
+       VITE_DIRECTUS_URL=https://1.cycloscope.online
+       VITE_DIRECTUS_STATIC_TOKEN=7JeEQ9bKtgX7onxJQZyGu8w8tCziiblV
+
+    e) Если их нет, добавьте
+    f) Нажмите "Redeploy" в Deployments
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣  Задеплойте изменения:
+
+    git add .
+    git commit -m "Fix Vercel deployment"
+    git push
+
+    Или через Vercel CLI:
+    
+    vercel --prod
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ ГОТОВО!
+
+Откройте: https://dashboardmorent.vercel.app
+Ошибки CORS должны исчезнуть!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 Подробная инструкция: VERCEL-DEPLOY.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  ВАЖНО:
+
+Прокси Vite работает только на localhost!
+В продакшене ОБЯЗАТЕЛЬНО нужно настроить CORS в Directus.
