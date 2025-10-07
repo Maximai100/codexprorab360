@@ -1,0 +1,90 @@
+╔══════════════════════════════════════════════════════════════╗
+║                  🎯 ЧТО ДЕЛАТЬ СЕЙЧАС                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+У вас 2 проблемы на Vercel:
+1. ❌ 404 на vite.svg
+2. ❌ CORS ошибки
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 1: ЗАДЕПЛОЙТЕ ИЗМЕНЕНИЯ НА VERCEL
+(исправит ошибку 404 на vite.svg)
+
+    git add .
+    git commit -m "Fix Vercel deployment"
+    git push
+
+Подождите 1-2 минуты пока Vercel пересоберет проект.
+
+Подробнее: ДЕПЛОЙ-ИЗМЕНЕНИЙ.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 2: НАСТРОЙТЕ CORS В DIRECTUS
+(исправит CORS ошибки)
+
+Вариант А: Если у вас есть доступ к серверу Directus
+
+1. Подключитесь к серверу (SSH)
+2. Откройте файл .env в папке Directus
+3. Добавьте эти строки:
+
+   CORS_ENABLED=true
+   CORS_ORIGIN=http://localhost:3000,https://dashboardmorent.vercel.app
+   CORS_METHODS=GET,POST,PATCH,DELETE,OPTIONS
+   CORS_ALLOWED_HEADERS=Content-Type,Authorization
+   CORS_CREDENTIALS=true
+
+4. Сохраните файл
+5. Перезапустите Directus:
+   
+   docker-compose restart
+   # или
+   pm2 restart directus
+   # или
+   sudo systemctl restart directus
+
+Подробнее: БЫСТРОЕ-РЕШЕНИЕ-CORS.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Вариант Б: Если НЕТ доступа к серверу
+
+Свяжитесь с администратором сервера Directus и попросите:
+
+"Добавьте, пожалуйста, эти настройки в файл .env Directus:
+
+CORS_ENABLED=true
+CORS_ORIGIN=http://localhost:3000,https://dashboardmorent.vercel.app
+CORS_METHODS=GET,POST,PATCH,DELETE,OPTIONS
+CORS_ALLOWED_HEADERS=Content-Type,Authorization
+CORS_CREDENTIALS=true
+
+И перезапустите Directus."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ПРОВЕРКА:
+
+После выполнения обоих шагов:
+
+1. Откройте: https://dashboardmorent.vercel.app
+2. Откройте консоль браузера (F12)
+3. Все ошибки должны исчезнуть!
+4. Приложение должно работать как на localhost
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ:
+
+- ДЕПЛОЙ-ИЗМЕНЕНИЙ.txt - про деплой на Vercel
+- БЫСТРОЕ-РЕШЕНИЕ-CORS.txt - про настройку CORS
+- DIRECTUS-CORS-RU.md - подробная инструкция по CORS
+- VERCEL-DEPLOY.md - полная инструкция по Vercel
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ НА LOCALHOST ВСЁ РАБОТАЕТ!
+
+Проблемы только на Vercel, и они решаются этими двумя шагами.
