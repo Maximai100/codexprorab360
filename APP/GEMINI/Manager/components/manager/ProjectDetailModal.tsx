@@ -59,10 +59,10 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
     const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && newTag.trim() !== '') {
             e.preventDefault();
-            if (!editableProject.tags.includes(newTag.trim())) {
+            if (!(editableProject.tags || []).includes(newTag.trim())) {
                 setEditableProject(prev => ({
                     ...prev,
-                    tags: [...prev.tags, newTag.trim()],
+                    tags: [...(prev.tags || []), newTag.trim()],
                 }));
             }
             setNewTag('');
@@ -72,14 +72,14 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
     const handleRemoveTag = (tagToRemove: string) => {
         setEditableProject(prev => ({
             ...prev,
-            tags: prev.tags.filter(tag => tag !== tagToRemove),
+            tags: (prev.tags || []).filter(tag => tag !== tagToRemove),
         }));
     };
 
     const handleRemoveAttachment = (junctionIdToRemove: number) => {
         setEditableProject(prev => ({
             ...prev,
-            attachments: prev.attachments.filter(att => att.id !== junctionIdToRemove),
+            attachments: (prev.attachments || []).filter(att => att.id !== junctionIdToRemove),
         }));
     };
     
@@ -96,7 +96,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                     projects_id: project.id,
                     directus_files_id: uploadedFile
                 };
-                setEditableProject(prev => ({ ...prev, attachments: [...prev.attachments, newAttachment] }));
+                setEditableProject(prev => ({ ...prev, attachments: [...(prev.attachments || []), newAttachment] }));
             } catch (error) {
                 console.error("File upload failed:", error);
                 alert("Не удалось загрузить файл.");
@@ -115,7 +115,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
         // We filter out any non-file attachments to prevent errors.
         const projectToSave = {
             ...editableProject,
-            attachments: editableProject.attachments
+            attachments: (editableProject.attachments || [])
                 .map(att => att.directus_files_id?.id)
                 .filter((id): id is string => !!id)
         };
@@ -180,7 +180,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                 <div>
                     <label htmlFor="tags" className="block mb-2 text-sm font-medium text-white">Теги</label>
                     <div className="flex flex-wrap gap-2 items-center p-2 border border-slate-600 rounded-lg bg-slate-700">
-                        {editableProject.tags.map(tag => (
+                        {(editableProject.tags || []).map(tag => (
                             <span key={tag} className="flex items-center bg-blue-900 text-blue-300 text-xs font-medium px-2 py-1 rounded-full">
                                 {tag}
                                 <button onClick={() => handleRemoveTag(tag)} className="ml-1.5 -mr-0.5 p-0.5 rounded-full hover:bg-blue-700">

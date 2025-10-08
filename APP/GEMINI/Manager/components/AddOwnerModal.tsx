@@ -30,7 +30,7 @@ const AddOwnerModal: React.FC<AddOwnerModalProps> = ({ onClose, onAddOwner }) =>
     };
 
     const handleContactChange = (index: number, field: 'type' | 'value', value: string) => {
-        const updatedContacts = [...newOwner.contact];
+        const updatedContacts = [...(newOwner.contact || [])];
         updatedContacts[index] = { ...updatedContacts[index], [field]: value };
         setNewOwner(prev => ({ ...prev, contact: updatedContacts }));
     };
@@ -38,14 +38,14 @@ const AddOwnerModal: React.FC<AddOwnerModalProps> = ({ onClose, onAddOwner }) =>
     const addContactField = () => {
         setNewOwner(prev => ({
             ...prev,
-            contact: [...prev.contact, { id: `c${Date.now()}`, type: '', value: '' }]
+            contact: [...(prev.contact || []), { id: `c${Date.now()}`, type: '', value: '' }]
         }));
     };
 
     const removeContactField = (id: string) => {
         setNewOwner(prev => ({
             ...prev,
-            contact: prev.contact.filter(c => c.id !== id)
+            contact: (prev.contact || []).filter(c => c.id !== id)
         }));
     };
 
@@ -55,7 +55,7 @@ const AddOwnerModal: React.FC<AddOwnerModalProps> = ({ onClose, onAddOwner }) =>
         const ownerData = {
             ...newOwner,
             apartments: apartmentsInput.split(',').map(s => s.trim()).filter(Boolean),
-            contact: newOwner.contact.filter(c => c.type.trim() !== '' && c.value.trim() !== ''),
+            contact: (newOwner.contact || []).filter(c => c.type.trim() !== '' && c.value.trim() !== ''),
         };
 
         onAddOwner(ownerData);
@@ -92,7 +92,7 @@ const AddOwnerModal: React.FC<AddOwnerModalProps> = ({ onClose, onAddOwner }) =>
                 <div>
                      <label className="block mb-2 text-sm font-medium text-white">Контактная информация</label>
                      <div className="space-y-2">
-                        {newOwner.contact.map((contact, index) => (
+                        {(newOwner.contact || []).map((contact, index) => (
                              <div key={contact.id} className="flex items-center gap-2">
                                 <input
                                     type="text"

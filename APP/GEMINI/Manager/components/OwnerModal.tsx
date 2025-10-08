@@ -34,7 +34,7 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
     };
 
     const handleContactChange = (index: number, field: 'type' | 'value', value: string) => {
-        const updatedContacts = [...editableOwner.contact];
+        const updatedContacts = [...(editableOwner.contact || [])];
         updatedContacts[index] = { ...updatedContacts[index], [field]: value };
         setEditableOwner(prev => ({ ...prev, contact: updatedContacts }));
     };
@@ -42,14 +42,14 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
     const addContactField = () => {
         setEditableOwner(prev => ({
             ...prev,
-            contact: [...prev.contact, { id: `c${Date.now()}`, type: '', value: '' }]
+            contact: [...(prev.contact || []), { id: `c${Date.now()}`, type: '', value: '' }]
         }));
     };
 
     const removeContactField = (id: string) => {
         setEditableOwner(prev => ({
             ...prev,
-            contact: prev.contact.filter(c => c.id !== id)
+            contact: (prev.contact || []).filter(c => c.id !== id)
         }));
     };
 
@@ -57,7 +57,7 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
         // Filter out empty contact fields before saving
         const cleanedOwner = {
             ...editableOwner,
-            contact: editableOwner.contact.filter(c => c.type.trim() !== '' && c.value.trim() !== '')
+            contact: (editableOwner.contact || []).filter(c => c.type.trim() !== '' && c.value.trim() !== '')
         };
         onUpdate(cleanedOwner);
         setIsEditing(false);
@@ -143,7 +143,7 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
                     <h4 className="text-md font-semibold text-slate-200 mb-2">Контактная информация</h4>
                     {isEditing ? (
                         <div className="space-y-2">
-                            {editableOwner.contact.map((contact, index) => (
+                            {(editableOwner.contact || []).map((contact, index) => (
                                 <div key={contact.id} className="flex items-center gap-2">
                                     <input
                                         type="text"
@@ -180,23 +180,23 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
                         </div>
                     ) : (
                          <ul className="space-y-2 text-sm text-slate-400">
-                            {owner.contact.map(c => (
+                            {(owner.contact || []).map(c => (
                                 <li key={c.id} className="flex items-center">
                                     {renderContactIcon(c.type)}
                                     <span className="flex-shrink-0"><span className="font-medium text-slate-300">{c.type}:</span></span>
                                     <span className="ml-2 truncate">{c.value}</span>
                                 </li>
                             ))}
-                            {owner.contact.length === 0 && <p className="italic">Контактов нет.</p>}
+                            {(!owner.contact || owner.contact.length === 0) && <p className="italic">Контактов нет.</p>}
                         </ul>
                     )}
                 </div>
                 
                 <div>
                     <h4 className="text-md font-semibold text-slate-200 mb-2">Апартаменты</h4>
-                    {isEditing ? <input type="text" name="apartments" value={editableOwner.apartments.join(', ')} onChange={handleInputChange} className={inputClasses} placeholder="Например: A-101, B-205" /> : (
+                    {isEditing ? <input type="text" name="apartments" value={(editableOwner.apartments || []).join(', ')} onChange={handleInputChange} className={inputClasses} placeholder="Например: A-101, B-205" /> : (
                         <div className="flex flex-wrap gap-2">
-                            {owner.apartments.map(apt => (
+                            {(owner.apartments || []).map(apt => (
                                 <span key={apt} className="flex items-center bg-blue-900 text-blue-300 text-xs font-medium px-2.5 py-1 rounded-full">
                                     <BuildingOfficeIcon className="w-4 h-4 mr-1.5" />
                                     {apt}
