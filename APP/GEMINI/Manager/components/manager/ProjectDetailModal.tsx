@@ -166,7 +166,7 @@ const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({ project, onClos
                     </div>
                      <div>
                         <label htmlFor="deadline" className="block mb-2 text-sm font-medium text-white">Дедлайн</label>
-                        <input type="date" id="deadline" name="deadline" value={editableProject.deadline.split('T')[0]} onChange={handleDateChange} className={inputClasses} />
+                        <input type="date" id="deadline" name="deadline" value={editableProject.deadline ? editableProject.deadline.split('T')[0] : ''} onChange={handleDateChange} className={inputClasses} />
                     </div>
                      <div>
                         <label htmlFor="status" className="block mb-2 text-sm font-medium text-white">Статус</label>
