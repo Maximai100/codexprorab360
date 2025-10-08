@@ -1,0 +1,96 @@
+╔══════════════════════════════════════════════════════════════╗
+║              ✅ ФИНАЛЬНАЯ ИНСТРУКЦИЯ                        ║
+╚══════════════════════════════════════════════════════════════╝
+
+ХОРОШИЕ НОВОСТИ! 🎉
+
+CORS уже настроен в Directus для вашего рабочего проекта:
+morent-sochi.vercel.app
+
+Вам нужно просто ДОБАВИТЬ новый домен к существующим.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 1: ЗАДЕПЛОЙТЕ ИЗМЕНЕНИЯ НА VERCEL
+
+    git add .
+    git commit -m "Fix Vercel deployment"
+    git push
+
+Это исправит ошибку 404 на vite.svg
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 2: ОБНОВИТЕ CORS В DIRECTUS
+
+1. Подключитесь к серверу Directus (SSH)
+
+2. Откройте файл .env:
+   
+   cd /path/to/directus
+   nano .env
+
+3. Найдите строку CORS_ORIGIN (она уже есть!)
+
+4. ДОБАВЬТЕ новый домен к существующим:
+
+   Было (примерно):
+   CORS_ORIGIN=https://morent-sochi.vercel.app
+
+   Стало:
+   CORS_ORIGIN=https://morent-sochi.vercel.app,https://dashboardmorent.vercel.app,http://localhost:3000
+
+   ⚠️ НЕ УДАЛЯЙТЕ старые домены! Только ДОБАВЬТЕ новые!
+
+5. Сохраните файл (Ctrl+O, Enter, Ctrl+X)
+
+6. Перезапустите Directus:
+   
+   docker-compose restart
+   # или
+   pm2 restart directus
+   # или
+   sudo systemctl restart directus
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 3: ПРОВЕРЬТЕ РЕЗУЛЬТАТ
+
+1. Откройте: https://dashboardmorent.vercel.app
+2. Откройте консоль (F12)
+3. Все ошибки должны исчезнуть!
+4. Проверьте рабочий проект: https://morent-sochi.vercel.app
+5. Он тоже должен работать как раньше
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 ПРИМЕР ПОЛНОЙ НАСТРОЙКИ:
+
+CORS_ENABLED=true
+CORS_ORIGIN=https://morent-sochi.vercel.app,https://dashboardmorent.vercel.app,http://localhost:3000
+CORS_METHODS=GET,POST,PATCH,DELETE,OPTIONS
+CORS_ALLOWED_HEADERS=Content-Type,Authorization
+CORS_CREDENTIALS=true
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ ВАЖНО:
+
+- НЕ удаляйте morent-sochi.vercel.app из CORS_ORIGIN!
+- Просто добавьте dashboardmorent.vercel.app через запятую
+- Оба проекта будут работать
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ ПОСЛЕ ЭТОГО:
+
+Оба проекта будут работать:
+✅ https://morent-sochi.vercel.app (рабочий)
+✅ https://dashboardmorent.vercel.app (новый)
+✅ http://localhost:3000 (разработка)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 ВСЁ ГОТОВО!
+
+Это займет 5 минут, и всё заработает!

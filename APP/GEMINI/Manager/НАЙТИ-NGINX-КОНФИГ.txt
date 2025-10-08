@@ -1,0 +1,177 @@
+╔══════════════════════════════════════════════════════════════╗
+║          🔍 КАК НАЙТИ КОНФИГУРАЦИЮ NGINX                    ║
+╚══════════════════════════════════════════════════════════════╝
+
+ПОДКЛЮЧИТЕСЬ К СЕРВЕРУ:
+
+    ssh user@1.cycloscope.online
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 1: ПРОВЕРЬТЕ, ЧТО NGINX УСТАНОВЛЕН
+
+    nginx -v
+
+Должно показать версию, например: nginx version: nginx/1.18.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 2: НАЙДИТЕ ГЛАВНЫЙ КОНФИГУРАЦИОННЫЙ ФАЙЛ
+
+    nginx -t
+
+Это покажет путь к конфигурации, например:
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 3: НАЙДИТЕ КОНФИГУРАЦИЮ ДЛЯ DIRECTUS
+
+Обычно конфигурации сайтов находятся в:
+
+    # Вариант 1 (Ubuntu/Debian):
+    ls -la /etc/nginx/sites-available/
+    ls -la /etc/nginx/sites-enabled/
+
+    # Вариант 2 (CentOS/RHEL):
+    ls -la /etc/nginx/conf.d/
+
+    # Вариант 3 (Docker):
+    docker exec nginx ls -la /etc/nginx/conf.d/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 4: НАЙДИТЕ ФАЙЛ С НАСТРОЙКАМИ DIRECTUS
+
+Ищите файл, который содержит "1.cycloscope.online":
+
+    grep -r "1.cycloscope.online" /etc/nginx/
+
+    # Или
+    grep -r "cycloscope" /etc/nginx/
+
+    # Или ищите по порту Directus (обычно 8055):
+    grep -r "8055" /etc/nginx/
+
+Это покажет файл, например:
+/etc/nginx/sites-available/directus
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 5: НАЙДИТЕ НАСТРОЙКИ CORS
+
+Откройте найденный файл:
+
+    sudo nano /etc/nginx/sites-available/directus
+
+Ищите строки с:
+- Access-Control-Allow-Origin
+- add_header
+- morent-sochi.vercel.app
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 6: ДОБАВЬТЕ НОВЫЙ ДОМЕН
+
+Найдите строку типа:
+
+    add_header 'Access-Control-Allow-Origin' 'https://morent-sochi.vercel.app' always;
+
+Измените на:
+
+    add_header 'Access-Control-Allow-Origin' 'https://morent-sochi.vercel.app, https://dashboardmorent.vercel.app' always;
+
+Или если используется переменная:
+
+    set $cors_origin "";
+    if ($http_origin ~* (https://morent-sochi\.vercel\.app|https://dashboardmorent\.vercel\.app)) {
+        set $cors_origin $http_origin;
+    }
+    add_header 'Access-Control-Allow-Origin' $cors_origin always;
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 7: ПРОВЕРЬТЕ КОНФИГУРАЦИЮ
+
+    sudo nginx -t
+
+Должно показать:
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ШАГ 8: ПЕРЕЗАГРУЗИТЕ NGINX
+
+    sudo systemctl reload nginx
+
+    # Или
+    sudo service nginx reload
+
+    # Или для Docker:
+    docker exec nginx nginx -s reload
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ ГОТОВО!
+
+Проверьте: https://dashboardmorent.vercel.app
+Ошибки CORS должны исчезнуть!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 ПОЛНЫЙ ПРИМЕР КОНФИГУРАЦИИ NGINX:
+
+server {
+    listen 443 ssl http2;
+    server_name 1.cycloscope.online;
+
+    # SSL настройки...
+
+    location / {
+        # CORS headers
+        set $cors_origin "";
+        if ($http_origin ~* (https://morent-sochi\.vercel\.app|https://dashboardmorent\.vercel\.app)) {
+            set $cors_origin $http_origin;
+        }
+        
+        add_header 'Access-Control-Allow-Origin' $cors_origin always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PATCH, DELETE, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+        
+        # Handle preflight
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' $cors_origin always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PATCH, DELETE, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+            add_header 'Access-Control-Max-Age' 86400;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
+        # Proxy to Directus
+        proxy_pass http://localhost:8055;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ ЕСЛИ НЕ НАШЛИ NGINX КОНФИГУРАЦИЮ:
+
+Возможно используется Docker или другая настройка.
+В этом случае проще настроить CORS в Directus через .env
+
+Смотрите: ТОЧНАЯ-ИНСТРУКЦИЯ.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 СОВЕТ:
+
+Перед изменением сделайте резервную копию:
+
+    sudo cp /etc/nginx/sites-available/directus /etc/nginx/sites-available/directus.backup

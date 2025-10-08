@@ -1,0 +1,139 @@
+╔══════════════════════════════════════════════════════════════╗
+║           🎯 ТОЧНАЯ ИНСТРУКЦИЯ ДЛЯ ВАШЕГО СЛУЧАЯ           ║
+╚══════════════════════════════════════════════════════════════╝
+
+СИТУАЦИЯ:
+
+В .env файле CORS закомментирован:
+#CORS_ENABLED=false
+#CORS_ORIGIN=http://localhost:8080
+
+Но рабочий проект morent-sochi.vercel.app работает!
+
+Это значит: CORS настроен на уровне nginx/Apache, а не в Directus.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+РЕШЕНИЕ: 2 ВАРИАНТА
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ВАРИАНТ 1: РАСКОММЕНТИРОВАТЬ И НАСТРОИТЬ В DIRECTUS (проще)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Откройте файл .env:
+   
+   nano .env
+
+2. Найдите закомментированные строки CORS
+
+3. Раскомментируйте и измените:
+
+   Было:
+   #CORS_ENABLED=false
+   #CORS_ORIGIN=http://localhost:8080
+   #CORS_METHODS=GET,POST,PUT,PATCH,DELETE,OPTIONS
+   #CORS_HEADERS=Content-Type,Authorization
+
+   Стало:
+   CORS_ENABLED=true
+   CORS_ORIGIN=https://morent-sochi.vercel.app,https://dashboardmorent.vercel.app,http://localhost:3000
+   CORS_METHODS=GET,POST,PATCH,DELETE,OPTIONS
+   CORS_ALLOWED_HEADERS=Content-Type,Authorization
+   CORS_CREDENTIALS=true
+
+4. Сохраните (Ctrl+O, Enter, Ctrl+X)
+
+5. Перезапустите Directus:
+   
+   docker-compose restart
+   # или
+   pm2 restart directus
+   # или
+   sudo systemctl restart directus
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ВАРИАНТ 2: НАСТРОИТЬ В NGINX/APACHE (если знаете как)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Если у вас nginx:
+
+1. Найдите конфигурацию сайта:
+   
+   nano /etc/nginx/sites-available/directus
+   # или
+   nano /etc/nginx/conf.d/directus.conf
+
+2. Найдите блок location / или server
+
+3. Добавьте/измените CORS заголовки:
+
+   location / {
+       # Существующие настройки...
+       
+       # CORS headers
+       add_header 'Access-Control-Allow-Origin' 'https://morent-sochi.vercel.app, https://dashboardmorent.vercel.app' always;
+       add_header 'Access-Control-Allow-Methods' 'GET, POST, PATCH, DELETE, OPTIONS' always;
+       add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+       add_header 'Access-Control-Allow-Credentials' 'true' always;
+       
+       # Handle preflight
+       if ($request_method = 'OPTIONS') {
+           add_header 'Access-Control-Allow-Origin' 'https://morent-sochi.vercel.app, https://dashboardmorent.vercel.app' always;
+           add_header 'Access-Control-Allow-Methods' 'GET, POST, PATCH, DELETE, OPTIONS' always;
+           add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+           add_header 'Access-Control-Max-Age' 86400;
+           return 204;
+       }
+       
+       proxy_pass http://localhost:8055;
+   }
+
+4. Проверьте конфигурацию:
+   
+   sudo nginx -t
+
+5. Перезагрузите nginx:
+   
+   sudo systemctl reload nginx
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 РЕКОМЕНДАЦИЯ: ВАРИАНТ 1 (проще и надежнее)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 КОПИРУЙТЕ ЭТИ СТРОКИ В .env:
+
+CORS_ENABLED=true
+CORS_ORIGIN=https://morent-sochi.vercel.app,https://dashboardmorent.vercel.app,http://localhost:3000
+CORS_METHODS=GET,POST,PATCH,DELETE,OPTIONS
+CORS_ALLOWED_HEADERS=Content-Type,Authorization
+CORS_CREDENTIALS=true
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ ВАЖНО:
+
+После изменения .env обязательно перезапустите Directus!
+Иначе изменения не применятся.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ ПРОВЕРКА:
+
+1. Перезапустите Directus
+2. Откройте: https://dashboardmorent.vercel.app
+3. Откройте консоль (F12)
+4. Ошибки CORS должны исчезнуть!
+5. Проверьте рабочий проект: https://morent-sochi.vercel.app
+6. Он тоже должен работать
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 ГОТОВО!
+
+Оба проекта будут работать!

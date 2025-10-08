@@ -28,22 +28,31 @@
 
 1. Подключитесь к серверу (SSH)
 2. Откройте файл .env в папке Directus
-3. Добавьте эти строки:
+3. ⚠️ ВАЖНО! Сначала проверьте текущие настройки:
+   
+   cat .env | grep CORS
+
+4. Добавьте эти строки (добавьте ВСЕ ваши домены!):
 
    CORS_ENABLED=true
-   CORS_ORIGIN=http://localhost:3000,https://dashboardmorent.vercel.app
+   CORS_ORIGIN=http://localhost:3000,https://dashboardmorent.vercel.app,https://ВАШ-ДРУГОЙ-ПРОЕКТ.com
    CORS_METHODS=GET,POST,PATCH,DELETE,OPTIONS
    CORS_ALLOWED_HEADERS=Content-Type,Authorization
    CORS_CREDENTIALS=true
+   
+   ⚠️ Замените "ВАШ-ДРУГОЙ-ПРОЕКТ.com" на реальный домен!
 
-4. Сохраните файл
-5. Перезапустите Directus:
+5. Сохраните файл
+6. Перезапустите Directus:
    
    docker-compose restart
    # или
    pm2 restart directus
    # или
    sudo systemctl restart directus
+
+⚠️ ВАЖНО: Если у вас есть другой рабочий проект, смотрите:
+БЕЗОПАСНАЯ-НАСТРОЙКА-CORS.txt
 
 Подробнее: БЫСТРОЕ-РЕШЕНИЕ-CORS.txt
 

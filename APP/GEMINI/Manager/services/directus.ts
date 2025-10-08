@@ -106,3 +106,13 @@ export const uploadFile = async (file: File) => {
     });
     return handleResponse(response);
 };
+
+// --- Sync API (for offline support) ---
+
+export const fetchOwners = async (): Promise<Owner[]> => {
+    return getOwners();
+};
+
+export const fetchProjects = async (): Promise<Project[]> => {
+    return getProjects();
+};

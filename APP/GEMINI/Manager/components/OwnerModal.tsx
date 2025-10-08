@@ -2,6 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import type { Owner, ContactMethod } from '../types';
 import Modal from './Modal';
+import MobileModal from './mobile/MobileModal';
+import MobileInput from './mobile/MobileInput';
+import MobileTextarea from './mobile/MobileTextarea';
+import { useIsMobile } from '../hooks/useMediaQuery';
 import { PhoneIcon, EnvelopeIcon, BuildingOfficeIcon, PencilIcon, TrashIcon, PlusIcon, XMarkIcon } from './icons/Icons';
 
 interface OwnerModalProps {
@@ -14,6 +18,7 @@ interface OwnerModalProps {
 const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editableOwner, setEditableOwner] = useState(owner);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         setEditableOwner(owner);
@@ -115,19 +120,25 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
     
     const inputClasses = "bg-slate-700 border border-slate-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
 
-    return (
-        <Modal 
-            title={isEditing ? `Редактирование: ${owner.name}` :`Карточка собственника: ${owner.name}`} 
-            onClose={onClose}
-            footer={renderFooter()}
-        >
-            <div className="space-y-4">
-                 {isEditing && (
+    const ModalComponent = isMobile ? MobileModal : Modal;
+
+    const content = (
+        <div className="space-y-4">
+             {isEditing && (
+                isMobile ? (
+                    <MobileInput
+                        label="ФИО / Название организации"
+                        name="name"
+                        value={editableOwner.name}
+                        onChange={handleInputChange}
+                    />
+                ) : (
                     <div>
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-white">ФИО / Название организации</label>
                         <input type="text" id="name" name="name" value={editableOwner.name} onChange={handleInputChange} className={inputClasses} />
                     </div>
-                )}
+                )
+            )}
                 <div>
                     <h4 className="text-md font-semibold text-slate-200 mb-2">Контактная информация</h4>
                     {isEditing ? (
@@ -197,7 +208,18 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
 
                 <div>
                     <h4 className="text-md font-semibold text-slate-200 mb-2">Заметки</h4>
-                    {isEditing ? <textarea name="notes" rows={3} value={editableOwner.notes} onChange={handleInputChange} className={inputClasses} /> : (
+                    {isEditing ? (
+                        isMobile ? (
+                            <MobileTextarea
+                                name="notes"
+                                rows={4}
+                                value={editableOwner.notes}
+                                onChange={handleInputChange}
+                            />
+                        ) : (
+                            <textarea name="notes" rows={3} value={editableOwner.notes} onChange={handleInputChange} className={inputClasses} />
+                        )
+                    ) : (
                         owner.notes ? (
                             <div className="flex items-start bg-slate-700/50 p-3 rounded-lg">
                                 <PencilIcon className="w-4 h-4 mr-3 mt-1 text-slate-400 flex-shrink-0" />
@@ -207,7 +229,16 @@ const OwnerModal: React.FC<OwnerModalProps> = ({ owner, onClose, onUpdate, onDel
                     )}
                 </div>
             </div>
-        </Modal>
+    );
+
+    return (
+        <ModalComponent 
+            title={isEditing ? `Редактирование: ${owner.name}` :`Карточка собственника: ${owner.name}`} 
+            onClose={onClose}
+            footer={renderFooter()}
+        >
+            {content}
+        </ModalComponent>
     );
 };
 
